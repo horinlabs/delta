@@ -3,20 +3,20 @@
 </style>
 
 <template>
-<div class="accordion">
+<div class="accordion" @item-choosed="resolveItem()">
   <slot></slot>
 </div>
 </template>
 
 <script lang="babel">
-import AccordionItem from 'accordion-item.vue'
-
 export default {
   props: {
     oneAtTime: Boolean
   },
-  components: {
-    'accordion-item': AccordionItem
+  methods: {
+    resolveItem(a,b,c,d,e){
+      console.log("Frango",a,b,c,d,e);
+    }
   }
 }
 </script>

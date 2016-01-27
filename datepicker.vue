@@ -1,4 +1,7 @@
 <style scoped>
+.container{
+  height: 30px;
+}
 input {
   width: 100%;
 }
@@ -17,6 +20,12 @@ import Calendar from './calendar'
 export default {
   props: {
     width: String,
+    // time: {
+    //   type: Boolean,
+    //   default(){
+    //     return false;
+    //   }
+    // },
     showCalendar: {
       type: Boolean,
       default(){

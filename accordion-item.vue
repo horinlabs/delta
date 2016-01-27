@@ -3,11 +3,11 @@
 </style>
 
 <template>
-<div class="accordion-item">
-  <div class="accordion-item-header">
-    {{title}}
-  </div>
-  <div class="accordion-item-body" v-if="{{ !hidden }}">
+<div class="container">
+  <header class="container" @click="itemChoosed()">
+    <h4>{{title}}</h4>
+  </header>
+  <div class="container" v-show="!hidden">
     <slot></slot>
   </div>
 </div>
@@ -17,7 +17,18 @@
 export default {
   props: {
     title: String,
-    hidden: Boolean
+    hidden: {
+      type: Boolean,
+      default(){
+        return true;
+      }
+    }
+  },
+  methods: {
+    itemChoosed(){
+      this.hidden = !this.hidden;
+      this.$emit('item-choosed', this.$el);
+    }
   }
 }
 </script>
