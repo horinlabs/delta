@@ -168,89 +168,90 @@
 </section>
 </template>
 
-<script>
-  import StickyHeader from '../js/stickyheader.js';
+<script lang="babel">
+// import StickyHeader from './plugins/stickyheader.js'
+export default {
+  props: {
+    data: Array,
+    columns: Array,
+    renderer: Object,
+    selected: Object,
+    filterKey: String
+  },
+  data(){
+    let sortOrders = {};
 
-  export default {
-    props: {
-      data: Array,
-      columns: Array,
-      renderer: Object,
-      selected: Object,
-      filterKey: String
+    this.columns.forEach((key) => sortOrders[key] = 1);
+
+    return {
+      sortKey: '',
+      sortOrders: sortOrders
+    }
+  },
+  // created(){
+  //   let savedData = localStorage.getItem('vue-grid');
+  //   if(savedData) this.data = JSON.parse(savedData);
+  // },
+  ready(){
+    if(0 in this.data) this.setSelected(this.data[0])
+    else this.add();
+
+    // StickyHeader(this.$els.datagrid);
+  },
+  methods: {
+    sortBy(key){
+      this.sortKey = key;
+      this.sortOrders[key] = this.sortOrders[key] * -1;
     },
-    data: function(){
-      var sortOrders = {};
-      this.columns.forEach(function(key) {
-        sortOrders[key] = 1
-      });
+    clear(){
+      if(confirm("Do you really want to remove all rows?")){
+        for (let i = this.data.length - 1; i >= 0; i--) {
+          this.remove(this.data[i]);
+        }
 
-      return {
-        sortKey: '',
-        focused: null,
-        sortOrders: sortOrders
+        this.add();
       }
     },
-    created: function(){
-      var savedData = localStorage.getItem('apn-piw');
-      if(savedData){ this.data = JSON.parse(savedData) }
+    save(){
+      // localStorage.setItem('vue-grid', JSON.stringify(this.data));
     },
-    ready: function(){
-      if(0 in this.data) this.setSelected(this.data[0]);
-      else this.add();
-      StickyHeader(this.$els.datagrid);
+    setSelected(entry){
+      this.$set('selected', entry);
+      this.$dispatch('entry-selected', entry);
     },
-    methods: {
-      sortBy: function(key) {
-        this.sortKey = key;
-        this.sortOrders[key] = this.sortOrders[key] * -1;
-      },
-      clear: function(){
-    		if(confirm("Do you really want to remove all rows?")){
-    			for(var i = this.data.length - 1; i >= 0; i--){ this.remove(this.data[i]); }
-    			this.add();
-    		}
-      },
-      save: function(){
-        localStorage.setItem('apn-piw', JSON.stringify(this.data));
-      },
-      setSelected: function(entry){
-        this.$set('selected', entry);
-        this.focused = 0;
-        this.$dispatch('entry-selected', entry);
-      },
-      selectNext: function(){
-        var index = this.data.indexOf(this.selected);
-        if(index + 1 in this.data){
-          this.setSelected(this.data[index + 1]);
-        }
-      },
-      selectPrevious: function(){
-        var index = this.data.indexOf(this.selected);
-        if(index - 1 in this.data){
-          this.setSelected(this.data[index - 1]);
-        }
-      },
-      remove: function(){
-        var index = this.data.indexOf(this.selected);
-
-        if(index - 1 in this.data){
-          this.setSelected(this.data[index - 1]);
-        } else {
-          this.setSelected(this.data[index + 1]);
-        }
-
-        this.data.splice(index, 1);
-      },
-      add: function(_entry){
-        var entry = _entry || (function(cols){ var e = {}; cols.forEach(function(col){ e[col] = "" }); return e; })(this.columns);
-        this.data.push(entry);
-        this.setSelected(entry);
-        this.$dispatch('entry-added', entry);
-      },
-      copy: function(){
-        this.add(JSON.parse(JSON.stringify(this.selected)));
+    selectNext(){
+      let index = this.data.indexOf(this.selected);
+      if(index + 1 in this.data){
+        this.setSelected(this.data[index + 1]);
       }
+    },
+    selectPrevious(){
+      let index = this.data.indexOf(this.selected);
+      if(index - 1 in this.data){
+        this.setSelected(this.data[index - 1]);
+      }
+    },
+    remove(entry){
+      let index = this.data.indexOf(entry || this.selected);
+
+      if(index - 1 in this.data){
+        this.setSelected(this.data[index - 1]);
+      } else {
+        this.setSelected(this.data[index + 1]);
+      }
+
+      this.data.splice(index, 1);
+    },
+    add(_entry){
+      let entry = _entry || (function(cols){ let e = {}; cols.forEach((col) => e[col] = ""); return e })(this.columns);
+
+      this.data.push(entry);
+      this.setSelected(entry);
+      this.$dispatch('entry-added', entry);
+    },
+    copy(){
+      this.add(JSON.parse(JSON.stringify(this.selected)))
     }
   }
+}
 </script>

@@ -1,13 +1,20 @@
 <style scoped>
-
+.accordion-item{
+  margin-bottom: 5px;
+}
+.accordion-item-body{
+  width: 100;
+  background-color: white;
+  color: #333;
+}
 </style>
 
 <template>
-<div class="container">
+<div class="accordion-item">
   <header class="container" @click="itemChoosed()">
     <h4>{{title}}</h4>
   </header>
-  <div class="container" v-show="!hidden">
+  <div class="container accordion-item-body" v-show="!hidden">
     <slot></slot>
   </div>
 </div>
