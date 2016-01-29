@@ -10,7 +10,6 @@
   border-top: 5px solid #000;
   border-right: 5px solid transparent;
   border-left: 5px solid transparent;
-
   position: absolute;
   right: 2px;
   content:'';
@@ -22,7 +21,6 @@
   border-bottom: 5px solid #000;
   border-right: 5px solid transparent;
   border-left: 5px solid transparent;
-
   position: absolute;
   right: 2px;
   content:'';
@@ -32,6 +30,12 @@
   background-color: white;
   color: #333;
 }
+li:hover{
+  background-color: rgba(129, 200, 208, 0.25);
+}
+li.active{
+  background-color: rgba(129, 200, 208, 0.35);
+}
 </style>
 
 <template>
@@ -39,13 +43,18 @@
   <select style="display: none" v-model="selected">
     <option v-for="option in options" :value="option.value">{{ option.text }}</option>
   </select>
-  <div class="select" :class="{'open': hidden, 'closed': !hidden}" @click="openSelect()">
-    {{ selected }}
+  <div class="select" :class="{'open': hidden, 'closed': !hidden}" @click="toggle()">
+    {{ getOptionByValue(selected).text }}
   </div>
   <div class="select-list" v-show="!hidden">
-    <input type="text" v-model="filterKey" class="input" @blur="openSelect()">
+    <input type="text" v-el:search v-model="filterKey" class="input">
     <ul class="ul border">
-      <li v-for="option in options | filterBy filterKey" @click="setSelected(option.value)">{{ option.text }}</li>
+      <li
+        v-for="option in options | filterBy filterKey"
+        :class="{'active': getOptionByValue(selected) === option }"
+        @click="setSelected(option.value)">
+          {{ option.text }}
+      </li>
     </ul>
   </div>
 </div>
@@ -75,14 +84,30 @@ export default {
     }
   },
   methods: {
-    openSelect(){
-      this.hidden = !this.hidden;
-      this.$emit('select-open', this.$el);
+    toggle(){
+      if(this.hidden){
+        this.open();
+      } else {
+        this.close();
+      }
     },
-    setSelected(value){
+    getOptionByValue(value){
+      let filtered = this.options.filter((option) => option.value === value);
+      return filtered[0];
+    },
+    open(){
+      this.hidden = false;
+      this.$nextTick(() => this.$els.search.focus());
+      this.$emit('select-opened', this.$el);
+    },
+    close(){
       this.hidden = true;
       this.filterKey = '';
+      this.$emit('select-closed', this.$el);
+    },
+    setSelected(value){
       this.selected = value;
+      this.close();
       this.$emit('item-selected', {value: value, el: this.$el});
     }
   }
