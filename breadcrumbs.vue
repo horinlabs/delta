@@ -2,7 +2,7 @@
 .breadcrumb > span:not(.active){
   color: lightgrey;
 }
-.breadcrumb > span:not(.active)::after{
+.breadcrumb > span + span::before{
   content: ">";
   color: grey;
 }

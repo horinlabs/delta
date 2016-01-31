@@ -131,8 +131,8 @@ li > a{
   <div class="calendar">
 		<header>
 			<h2>{{ monthName }} - {{ year }}</h2>
-			<a class="btn-prev fontawesome-angle-left" @click="previousMonth()"></a>
-			<a class="btn-next fontawesome-angle-right" @click="nextMonth()"></a>
+			<a class="btn-prev" @click="previousMonth()"><i class="fa fa-angle-left"></i></a>
+			<a class="btn-next" @click="nextMonth()"><i class="fa fa-angle-right"></i></a>
 		</header>
   	<ul class="head">
       <li :class="{'begin': $index == 0}" v-for="week in weekNames">{{ week }}</li>
@@ -232,10 +232,12 @@ export default {
 	    Object.assign(this, getCalendar(this.month, this.year, this.locale));
 	  },
 		setDate(date){
-			this.currentDate = date;
-			this.month = date.getMonth();
-			Object.assign(this, getCalendar(this.month, this.year, this.locale));
-			this.$emit('date-changed');
+			this.$nextTick(() => {
+				this.currentDate = date;
+				this.month = date.getMonth();
+				Object.assign(this, getCalendar(this.month, this.year, this.locale));
+				this.$emit('date-changed');
+			})
 		}
 	}
 }

@@ -12,7 +12,7 @@
 <template>
 <div class="accordion-item">
   <header class="container" @click="itemChoosed()">
-    <h4>{{title}}</h4>
+    <h5>{{title}}</h5>
   </header>
   <div class="container accordion-item-body" v-show="!hidden">
     <slot></slot>

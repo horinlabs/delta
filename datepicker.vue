@@ -1,14 +1,14 @@
 <style scoped>
-.container{
+.datepicker{
   height: 30px;
 }
-input {
+.datepicker > input {
   width: 100%;
 }
 </style>
 
 <template>
-<div class="container" :style="{ 'width': width }">
+<div class="datepicker" :style="{ 'width': width }">
   <input type="text" @focus="showCalendar = true" @blur="showCalendar = false" v-model="dateString">
   <calendar v-show="showCalendar" :current-date.sync="selectedDate"></calendar>
 </div>

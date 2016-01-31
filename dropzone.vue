@@ -11,13 +11,13 @@
   overflow: auto;
 }
 .filezone{
-  padding: 25px;
+  height: 100%;
   opacity: 0;
 }
 </style>
 
 <template>
-  <div class="wrapper">
+  <div class="wrapper" :style="{'height': height }">
     <input type="file" name="files" class="filezone full-width" title="Dropzone" multiple @change="getFiles">
     <div class="zone stretch">
       <span class="message" v-show="!files.length">{{ message }}</span>
@@ -29,6 +29,7 @@
 <script lang="babel">
 export default {
   props: {
+    height: String,
     multiple: {
       type: Boolean,
       default(){

@@ -1,6 +1,7 @@
 <style scoped>
-.select{
+.select-box{
   height: 30px;
+  position: relative;
   margin-bottom: 5px;
 }
 .open::after {
@@ -30,17 +31,17 @@
   background-color: white;
   color: #333;
 }
-li:hover{
+.select-list-item:hover{
   background-color: rgba(129, 200, 208, 0.25);
 }
-li.active{
+.select-list-item.active{
   background-color: rgba(129, 200, 208, 0.35);
 }
 </style>
 
 <template>
-<div class="">
-  <select style="display: none" v-model="selected">
+<div class="select-box">
+  <select style="display: none" v-model="selected" :multiple="multiple">
     <option v-for="option in options" :value="option.value">{{ option.text }}</option>
   </select>
   <div class="select" :class="{'open': hidden, 'closed': !hidden}" @click="toggle()">
@@ -50,6 +51,7 @@ li.active{
     <input type="text" v-el:search v-model="filterKey" class="input">
     <ul class="ul border">
       <li
+        class="select-list-item"
         v-for="option in options | filterBy filterKey"
         :class="{'active': getOptionByValue(selected) === option }"
         @click="setSelected(option.value)">
@@ -63,17 +65,23 @@ li.active{
 <script lang="babel">
 export default {
   props: {
+    options: Array,
     filterKey: {
       type: String,
       default(){
         return '';
       }
     },
-    options: Array,
     hidden: {
       type: Boolean,
       default(){
         return true;
+      }
+    },
+    multiple: {
+      type: Boolean,
+      default(){
+        return false;
       }
     },
     selected: {
@@ -93,7 +101,7 @@ export default {
     },
     getOptionByValue(value){
       let filtered = this.options.filter((option) => option.value === value);
-      return filtered[0];
+      return filtered[0] || {};
     },
     open(){
       this.hidden = false;

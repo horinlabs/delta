@@ -174,7 +174,12 @@ export default {
   props: {
     data: Array,
     columns: Array,
-    renderer: Object,
+    renderer: {
+      type: Object,
+      default(){
+        return {};
+      }
+    },
     selected: Object,
     filterKey: String
   },
