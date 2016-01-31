@@ -4,6 +4,20 @@
   position: relative;
   margin-bottom: 5px;
 }
+.select{
+  padding:4px 0;
+  width:100%;
+  color:#000;
+  border:1px solid transparent;
+  border-bottom:1px solid #009688;
+}
+.select select:focus{
+  color:#000;
+  border:1px solid #009688;
+}
+.select option[disabled]{
+  color:#009688;
+}
 .open::after {
   display: inline-block;
   width: 0;

@@ -1,5 +1,10 @@
-<style scoped>
-
+<style>
+.btn-group{
+  display: inline-block;
+}
+.btn-group .btn{
+  float:left;
+}
 </style>
 
 <template>

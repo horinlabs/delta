@@ -4,8 +4,8 @@
 
 <template>
 <div class="alert" v-show="!hidden">
-  <span class="closebtn" @click="hidden = true">&times;</span>
   <i class="fa" :class="['fa-'+icon]"></i>{{ message }}
+  <span class="closebtn" @click="hidden = true">&times;</span>
 </div>
 </template>
 

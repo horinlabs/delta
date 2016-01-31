@@ -15,18 +15,35 @@
   width: 6px;
   background-color: white;
 }
-.btn-toggle > .key.on{
+.btn-toggle.on::after{
+  content: 'Yes';
+}
+.btn-toggle.off::before{
+  content: 'No';
+}
+.btn-toggle.on::after,
+.btn-toggle.off::before{
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btn-toggle.on > .key{
   left: 1px;
 }
-.btn-toggle > .key.off{
+.btn-toggle.off > .key{
   right: 1px;
 }
 </style>
 
 <template>
-<div class="btn-toggle" @click="value = !value">
+<div class="btn-toggle" :class="{'on': value, 'off': !value}" @click="value = !value">
   <input type="checkbox" :name="name" v-model="value">
-  <div class="key" :class="{'on': value, 'off': !value}"></div>
+  <div class="key"></div>
 </div>
 </template>
 

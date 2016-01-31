@@ -1,5 +1,22 @@
 <style scoped>
-
+.pagination{
+  margin:0;
+  padding:0;
+  display:inline-block;
+}
+.pagination li{
+  display:inline;
+}
+.pagination li a{
+  color:#000;
+  float:left;
+  padding:8px 16px;
+  text-decoration:none;
+  transition:background-color .3s;
+}
+.pagination li a:hover,.pagination li a:focus{
+  background-color:#ccc;
+}
 </style>
 
 <template>

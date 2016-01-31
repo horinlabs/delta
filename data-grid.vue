@@ -59,6 +59,16 @@
   tbody tr.active > td {
     background-color: rgba(129, 200, 208, 0.35);
   }
+  .table-all{border:1px solid #ccc}
+  .bordered tr,.table-all tr{border-bottom:1px solid #ddd}
+  .striped tbody tr:nth-child(even){background-color:#f1f1f1}
+  .table-all tr:nth-child(odd){background-color:#fff}
+  .table-all tr:nth-child(even){background-color:#f1f1f1}
+  .hoverable tbody tr{transition:background-color .25s ease}
+  .hoverable tbody tr:hover{background-color:#ccc; cursor:pointer}
+  .centered tr th,.centered tr td{text-align:center}
+  .table td,.table th,.table-all td,.table-all th{padding:6px 8px;display:table-cell;text-align:left;vertical-align:top}
+  .table th:first-child,.table td:first-child,.table-all th:first-child,.table-all td:first-child{padding-left:16px}
   .sticky-wrap {
     overflow: auto;
     position: relative;
@@ -123,21 +133,21 @@
 </style>
 
 <template>
-<div class="row tools">
-  <div class="col-md-4">
-    <input class="form-control" name="query" v-model="filterKey" placeholder="Search">
-  </div>
-  <div class="col-md-6 pull-right">
-    <button class="btn btn-default" accesskey="a" @click="add()"><i class="fa fa-plus"></i> Add</button>
-    <button class="btn btn-default" accesskey="c" @click="copy()"><i class="fa fa-clone"></i> Copy</button>
-    <button class="btn btn-default" accesskey="d" @click="remove()"><i class="fa fa-trash"></i> Remove</button>
-    <button class="btn btn-default" accesskey="x" @click="clear()"><i class="fa fa-trash"></i> Clear</button>
-    <button class="btn btn-default" accesskey="p" @click="selectPrevious()"><i class="fa fa-angle-double-left"></i> Previous</button>
-    <button class="btn btn-default" accesskey="n" @click="selectNext()"><i class="fa fa-angle-double-right"></i> Next</button>
-    <button class="btn btn-default" accesskey="s" @click="save()"><i class="fa fa-save"></i> Save</button>
-    <button class="btn btn-default" @click="submit()"><i class="fa fa-paper-plane"></i> Send</button>
-  </div>
-</div>
+<row class="tools">
+  <column size="m4">
+    <input class="input" name="query" v-model="filterKey" placeholder="Search">
+  </column>
+  <column size="m6" class="right">
+    <button class="btn" accesskey="a" @click="add()"><i class="fa fa-plus"></i> Add</button>
+    <button class="btn" accesskey="c" @click="copy()"><i class="fa fa-clone"></i> Copy</button>
+    <button class="btn" accesskey="d" @click="remove()"><i class="fa fa-trash"></i> Remove</button>
+    <button class="btn" accesskey="x" @click="clear()"><i class="fa fa-trash"></i> Clear</button>
+    <button class="btn" accesskey="p" @click="selectPrevious()"><i class="fa fa-angle-double-left"></i> Previous</button>
+    <button class="btn" accesskey="n" @click="selectNext()"><i class="fa fa-angle-double-right"></i> Next</button>
+    <button class="btn" accesskey="s" @click="save()"><i class="fa fa-save"></i> Save</button>
+    <button class="btn" @click="submit()"><i class="fa fa-paper-plane"></i> Send</button>
+  </column>
+</row>
 <section class="component">
   <div class="wrapper">
   <table v-el:datagrid>
@@ -170,6 +180,9 @@
 
 <script lang="babel">
 // import StickyHeader from './plugins/stickyheader.js'
+import Row from './row'
+import Column from './column'
+
 export default {
   props: {
     data: Array,
@@ -182,6 +195,9 @@ export default {
     },
     selected: Object,
     filterKey: String
+  },
+  components: {
+    Row, Column
   },
   data(){
     let sortOrders = {};
