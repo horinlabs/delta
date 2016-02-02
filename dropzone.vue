@@ -1,24 +1,24 @@
 <style scoped>
-.wrapper{
+.dropzone{
   position: relative;
   margin: 16px;
 }
-.zone{
+.dropzone > .filezone{
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+.dropzone > .zone{
   display: flex;
   align-items: center;
   justify-content: center;
   pointer-events: none;
   overflow: auto;
 }
-.filezone{
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-}
 </style>
 
 <template>
-  <div class="wrapper" :style="{'height': height }">
+  <div class="dropzone" :style="{'height': height }">
     <input type="file" name="files" class="filezone full-width" title="Dropzone" multiple @change="getFiles">
     <div class="zone stretch">
       <span class="message" v-show="!files.length">{{ message }}</span>

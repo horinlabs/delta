@@ -137,7 +137,7 @@
   <column size="m4">
     <input class="input" name="query" v-model="filterKey" placeholder="Search">
   </column>
-  <column size="m6" class="right">
+  <column size="m8" class="right">
     <button class="btn" accesskey="a" @click="add()"><i class="fa fa-plus"></i> Add</button>
     <button class="btn" accesskey="c" @click="copy()"><i class="fa fa-clone"></i> Copy</button>
     <button class="btn" accesskey="d" @click="remove()"><i class="fa fa-trash"></i> Remove</button>

@@ -3,7 +3,6 @@
   height: 35px;
   width: 50px;
   position: relative;
-  margin: 2px;
 }
 .btn-toggle > input[type=checkbox]{
   display: none;
