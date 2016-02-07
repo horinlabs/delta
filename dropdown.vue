@@ -33,7 +33,7 @@
 
 <template>
 <div :class="[(clickable)?'dropdown-click':'dropdown-hover']">
-  <button type="button" @click="toggleDropdown"><slot></slot></button>
+  <button type="button" @click="toggleDropdown"><slot></slot><span class="caret"></span></button>
   <div class="dropdown-content" :class="[(open)?'show':'']">
     <a :href="link.page" v-for="link in links">{{ link.text }}</a>
   </div>

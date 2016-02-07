@@ -3,7 +3,7 @@
 </style>
 
 <template>
-<div class="accordion" @item-choosed="resolveItem()">
+<div class="accordion">
   <slot></slot>
 </div>
 </template>
@@ -13,9 +13,11 @@ export default {
   props: {
     oneAtTime: Boolean
   },
-  methods: {
-    resolveItem(a,b,c,d,e){
-      console.log("Frango",a,b,c,d,e);
+  events: {
+    'accordion-item-choosed'(item){
+      if(this.oneAtTime){
+        this.$children.forEach((child) => child.hidden = (child.$el != item));
+      }
     }
   }
 }

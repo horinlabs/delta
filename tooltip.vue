@@ -1,10 +1,10 @@
 <style scoped>
-.tooltip .text{
-  display:none;
+.tooltip-wrapper {
+  position: relative;
 }
 
-.tooltip:hover .text{
-  display:inline-block;
+.tooltip-wrapper > .tooltip{
+  display:none;
   background: #1496bb;
   bottom: 100%;
   color: #fff;
@@ -17,7 +17,7 @@
   box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
 }
 
-.tooltip .text:after {
+.tooltip-wrapper > .tooltip:after {
   border-left: solid transparent 10px;
   border-right: solid transparent 10px;
   border-top: solid #1496bb 10px;
@@ -32,14 +32,19 @@
 </style>
 
 <template>
-<span class="tooltip">
-  <slot></slot>
-  <span class="text tag" :style="{'min-width': width}">{{ text }}</span>
+<span class="tooltip-wrapper">
+  <span class="text" @mouseover="hidden = false"  @mouseover="hidden = true"><slot></slot></span>
+  <span class="tooltip" :style="{'min-width': width}" v-show="!hidden">{{ text }}</span>
 </span>
 </template>
 
 <script lang="babel">
 export default {
-  props: ["text", "width"]
+  props: ["text", "width"],
+  data(){
+    return {
+      hidden: true
+    }
+  }
 }
 </script>

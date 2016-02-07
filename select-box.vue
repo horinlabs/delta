@@ -49,10 +49,10 @@
 <template>
 <div class="select-box">
   <select style="display: none" v-model="selected" :multiple="multiple">
-    <option v-for="option in options" :value="option.value">{{ option.text }}</option>
+    <option v-for="option in options" :value="option[valueKey]">{{ option[textKey] }}</option>
   </select>
   <div class="select" :class="{'open': hidden, 'closed': !hidden}" @click="toggle()">
-    {{ getOptionByValue(selected).text }}
+    {{ getOptionByValue(selected)[textKey] }}
   </div>
   <div class="select-list" v-show="!hidden">
     <input type="text" v-el:search v-model="filterKey" class="input">
@@ -61,8 +61,8 @@
         class="select-list-item"
         v-for="option in options | filterBy filterKey"
         :class="{'active': getOptionByValue(selected) === option }"
-        @click="setSelected(option.value)">
-          {{ option.text }}
+        @click="setSelected(option[valueKey])">
+          {{ option[textKey] }}
       </li>
     </ul>
   </div>
@@ -73,6 +73,7 @@
 export default {
   props: {
     options: Array,
+    multiple: Boolean,
     filterKey: {
       type: String,
       default(){
@@ -85,16 +86,22 @@ export default {
         return true;
       }
     },
-    multiple: {
-      type: Boolean,
-      default(){
-        return false;
-      }
-    },
     selected: {
       type: String,
       default(){
         return '';
+      }
+    },
+    textKey: {
+      type: String,
+      default(){
+        return 'text';
+      }
+    },
+    valueKey: {
+      type: String,
+      default(){
+        return 'value';
       }
     }
   },
@@ -107,7 +114,7 @@ export default {
       }
     },
     getOptionByValue(value){
-      let filtered = this.options.filter((option) => option.value === value);
+      let filtered = this.options.filter((option) => option[this.valueKey] === value);
       return filtered[0] || {};
     },
     open(){

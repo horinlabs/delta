@@ -3,7 +3,7 @@
   margin-bottom: 5px;
 }
 .accordion-item-body{
-  width: 100;
+  padding: 10px;
   background-color: white;
   color: #333;
 }
@@ -34,8 +34,8 @@ export default {
   methods: {
     itemChoosed(){
       this.hidden = !this.hidden;
-      this.$emit('item-choosed', this.$el);
+      this.$dispatch('accordion-item-choosed', this.$el);
     }
-  }
+  },
 }
 </script>

@@ -2,14 +2,15 @@
 .datepicker{
   height: 30px;
 }
-.datepicker > input {
-  width: 100%;
+.datepicker > .calendar {
+  position: absolute;
+  width: 400px;
 }
 </style>
 
 <template>
 <div class="datepicker" :style="{ 'width': width }">
-  <input type="text" @focus="showCalendar = true" @blur="showCalendar = false" v-model="dateString">
+  <input type="text" class="input" @focus="showCalendar = true" @blur="showCalendar = false" v-model="dateString">
   <calendar v-show="showCalendar" :current-date.sync="selectedDate"></calendar>
 </div>
 </template>

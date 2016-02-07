@@ -17,6 +17,7 @@ h3 {
 
 .calendar {
 	text-align: center;
+	background-color: white;
 }
 
 .calendar header {

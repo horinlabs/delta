@@ -9,9 +9,7 @@
   opacity: 0;
 }
 .dropzone > .zone{
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 20px;
   pointer-events: none;
   overflow: auto;
 }
